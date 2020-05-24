@@ -1,0 +1,10 @@
+{
+    "mitigation-scope": {
+        "client-id": 4,
+        "scope": {
+            "target-ip": "10.100.0.1",
+            "target-port": 53,
+            "target-protocol": 17
+        }
+    }
+}
