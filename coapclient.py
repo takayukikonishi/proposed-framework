@@ -1,7 +1,6 @@
 import json
 import sys
 
-import cbor2
 from coapthon.client.helperclient import HelperClient
 
 
@@ -19,7 +18,7 @@ class DOTSClient():
         self.path = path
         self.payload = payload
         try:
-            response = self.client.put(self.path, cbor2.dumps(self.payload))
+            response = self.client.put(self.path, self.payload)
             print(response.pretty_print())
         except KeyboardInterrupt:
             pass
