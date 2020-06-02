@@ -1,11 +1,11 @@
 # proposed-framework
 
-python3.7
+python3.8
 
 coapthon3==1.0.1
 
-cbor2==4.1.2
+paramiko
 
-`py dotsserver.py`
+`python3.8 coapserver.py`
 
-`py dots_client.py 0.0.0.0`
+`python3.8 coapclient.py 10.2.0.2 mitigationrequest.json`
