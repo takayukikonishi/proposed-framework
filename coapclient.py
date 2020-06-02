@@ -1,37 +1,24 @@
-import json
 import sys
-
+import json
 from coapthon.client.helperclient import HelperClient
 
 
-class DOTSClient():
-    SIGNALCHANNEL_PORT = 4646
-
-    def __init__(self, host):
-        self.host = host
-        self.path = None
-        self.payload = None
-        self.client = HelperClient(
-            server=(self.host, DOTSClient.SIGNALCHANNEL_PORT))
-
-    def PUT(self, path, payload):
-        self.path = path
-        self.payload = payload
-        try:
-            response = self.client.put(self.path, self.payload)
-            print(response.pretty_print())
-        except KeyboardInterrupt:
-            pass
-        finally:
-            self.client.stop()
-
-
 def main():
-    with open('Test.json', 'r') as f:
-        mitigation_request = json.dumps(json.load(f))
+    host = sys.argv[1]
+    port = 4646
+    path = 'localmanager'
 
-    dots_client = DOTSClient(sys.argv[1])
-    dots_client.PUT('dotsserver', mitigation_request)
+    file_path = sys.argv[2]
+    with open(file_path, 'r') as f:
+        payload = json.dumps(json.load(f))
+    client = HelperClient(server=(host, port))
+    try:
+        response = client.put(path, payload)
+        print(response.pretty_print())
+    except KeyboardInterrupt:
+        pass
+    finally:
+        client.stop()
 
 
 if __name__ == '__main__':
