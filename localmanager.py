@@ -11,10 +11,11 @@ class LocalManager(Resource):
         self.payload = 'Local Manager'
 
     def render_PUT(self, request):
-        self.payload = json.loads(request.payload)
-        print(self.payload)
+        self.payload = request.payload
+        print(json.loads(self.payload))
+        """
         mitigation = Mitigation(
-            self.payload['mitigation-scope']['scope']['target-ip'])
+            self.payload['ietf-dots-signal-channel:mitigation-scope']['scope']['target-prefix'])
         mitigation.firewall()
         if request.client_address != '192.168.0.10':
             client = HelperClient(server=('192.168.0.10', 4646))
@@ -25,4 +26,5 @@ class LocalManager(Resource):
                 pass
             finally:
                 client.stop()
+        """
         return self
