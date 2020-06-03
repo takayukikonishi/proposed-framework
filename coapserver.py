@@ -1,20 +1,24 @@
 import json
+import  argparse
 from coapthon.server.coap import CoAP
 from localmanager import LocalManager
 from globalmanager import GlobalManager
 
 
 class CoAPServer(CoAP):
-    def __init__(self, host, port):
+    def __init__(self, host, port, router):
         CoAP.__init__(self, (host, port))
-        self.add_resource('localmanager/', LocalManager())
+        self.add_resource('localmanager/', LocalManager(router))
         self.add_resource('globalmanager/', GlobalManager())
 
 
 def main():
     port = 4646
 
-    server = CoAPServer('0.0.0.0', port)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--router', '-r')
+    args = parser.parse_args()
+    server = CoAPServer('0.0.0.0', port, args.router)
     try:
         server.listen(10)
     except KeyboardInterrupt:

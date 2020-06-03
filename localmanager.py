@@ -6,10 +6,11 @@ from mitigation import Mitigation
 
 
 class LocalManager(Resource):
-    def __init__(self, name='LocalManager', coap_server=None):
+    def __init__(self, router, name='LocalManager', coap_server=None):
         super(LocalManager, self).__init__(name, coap_server,
                                            visible=True, observable=True, allow_children=True)
         self.payload = 'Local Manager'
+        self.router = router
 
     def render_PUT(self, request):
         self.payload = request.payload
@@ -17,7 +18,7 @@ class LocalManager(Resource):
             for target_prefix in scope['target-prefix'] :
                 target_ip = re.sub('/\d*', '', target_prefix)
                 print(target_ip)
-                mitigation = Mitigation(target_ip)
+                mitigation = Mitigation(target_ip, self.router)
                 mitigation.firewall()
                 if request.source[0] != '192.168.0.10':
                     client = HelperClient(server=('192.168.0.10', 4646))
