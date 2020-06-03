@@ -19,8 +19,7 @@ class LocalManager(Resource):
                 print(target_ip)
                 mitigation = Mitigation(target_ip)
                 mitigation.firewall()
-                """
-                if request.client_address != '192.168.0.10':
+                if request.source[0] != '192.168.0.10':
                     client = HelperClient(server=('192.168.0.10', 4646))
                     try:
                         response = client.put('globalmanager', self.payload)
@@ -29,5 +28,4 @@ class LocalManager(Resource):
                         pass
                     finally:
                         client.stop()
-                """
         return self
