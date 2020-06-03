@@ -1,4 +1,5 @@
 import json
+import re
 from coapthon.resources.resource import Resource
 from coapthon.client.helperclient import HelperClient
 from mitigation import Mitigation
@@ -12,19 +13,21 @@ class LocalManager(Resource):
 
     def render_PUT(self, request):
         self.payload = request.payload
-        print(json.loads(self.payload))
-        """
-        mitigation = Mitigation(
-            self.payload['ietf-dots-signal-channel:mitigation-scope']['scope']['target-prefix'])
-        mitigation.firewall()
-        if request.client_address != '192.168.0.10':
-            client = HelperClient(server=('192.168.0.10', 4646))
-            try:
-                response = client.put('globalmanager', self.payload)
-                print(response.pretty_print())
-            except KeyboardInterrupt:
-                pass
-            finally:
-                client.stop()
-        """
+        for scope in json.loads(self.payload)['ietf-dots-signal-channel:mitigation-scope']['scope'] :
+            for target_prefix in scope['target-prefix'] :
+                target_ip = re.sub('/\d*', '', target_prefix)
+                print(target_ip)
+                mitigation = Mitigation(target_ip)
+                mitigation.firewall()
+                """
+                if request.client_address != '192.168.0.10':
+                    client = HelperClient(server=('192.168.0.10', 4646))
+                    try:
+                        response = client.put('globalmanager', self.payload)
+                        print(response.pretty_print())
+                    except KeyboardInterrupt:
+                        pass
+                    finally:
+                        client.stop()
+                """
         return self
