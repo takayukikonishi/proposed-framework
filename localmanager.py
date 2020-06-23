@@ -20,8 +20,8 @@ class LocalManager(Resource):
                 print(target_ip)
                 mitigation = Mitigation(target_ip, self.router)
                 mitigation.firewall()
-                if request.source[0] != '192.168.0.10':
-                    client = HelperClient(server=('192.168.0.10', 4646))
+                if request.source[0] != '10.0.0.2':
+                    client = HelperClient(server=('10.0.0.2', 4646))
                     try:
                         response = client.put('globalmanager', self.payload)
                         print(response.pretty_print())
