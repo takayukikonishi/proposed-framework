@@ -12,7 +12,7 @@ class GlobalManager(Resource):
     def render_PUT(self, request):
         self.payload = request.payload
         print(json.loads(self.payload))
-        client = HelperClient(server=('10.1.0.2', 4646))
+        client = HelperClient(server=('10.2.0.2', 4646))
         try:
             response = client.put('localmanager', self.payload)
             print(response.pretty_print())

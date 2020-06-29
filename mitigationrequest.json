@@ -3,15 +3,15 @@
         "scope": [
             {
                 "target-prefix": [
-                    "10.2.1.2/24"
+                    "10.3.1.2/24"
                 ],
             "target-port-range": [
                 {
-                    "lower-port": 80
+                    "lower-port": 53
                 }
             ],
                 "target-protocol": [
-                    6
+                    17
                 ],
                 "lifetime": 3600
             }
