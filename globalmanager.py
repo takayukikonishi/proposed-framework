@@ -1,12 +1,13 @@
 import json
+from coapthon.server.coap import CoAP
 from coapthon.resources.resource import Resource
 from coapthon.client.helperclient import HelperClient
 
 
-class GlobalManager(Resource):
+class GlobalManagerResource(Resource):
     def __init__(self, name='GlobalManager', coap_server=None):
-        super(GlobalManager, self).__init__(name, coap_server,
-                                            visible=True, observable=True, allow_children=True)
+        super(GlobalManagerResource, self).__init__(name, coap_server,
+                                                    visible=True, observable=True, allow_children=True)
         self.payload = 'Global Manager'
 
     def render_PUT(self, request):
@@ -21,3 +22,25 @@ class GlobalManager(Resource):
         finally:
             client.stop()
         return self
+
+
+class CoAPServer(CoAP):
+    def __init__(self, host, port):
+        CoAP.__init__(self, (host, port))
+        self.add_resource('globalmanager/', GlobalManagerResource())
+
+
+def main():
+    port = 4646
+
+    server = CoAPServer('0.0.0.0', port)
+    try:
+        server.listen(10)
+    except KeyboardInterrupt:
+        print('Server Shutdown')
+        server.close()
+        print('Exiting...')
+
+
+if __name__ == '__main__':
+    main()

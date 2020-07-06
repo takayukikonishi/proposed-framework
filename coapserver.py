@@ -1,5 +1,5 @@
 import json
-import  argparse
+import argparse
 from coapthon.server.coap import CoAP
 from localmanager import LocalManager
 from globalmanager import GlobalManager
