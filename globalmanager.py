@@ -1,13 +1,20 @@
 import json
-from coapthon.server.coap import CoAP
-from coapthon.resources.resource import Resource
+
 from coapthon.client.helperclient import HelperClient
+from coapthon.resources.resource import Resource
+from coapthon.server.coap import CoAP
 
 
 class GlobalManagerResource(Resource):
     def __init__(self, name='GlobalManager', coap_server=None):
-        super(GlobalManagerResource, self).__init__(name, coap_server,
-                                                    visible=True, observable=True, allow_children=True)
+        super(
+            GlobalManagerResource,
+            self).__init__(
+            name,
+            coap_server,
+            visible=True,
+            observable=True,
+            allow_children=True)
         self.payload = 'Global Manager'
 
     def render_PUT(self, request):

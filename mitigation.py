@@ -1,4 +1,5 @@
 import re
+
 import paramiko
 
 
@@ -12,7 +13,7 @@ class Mitigation():
         client.connect(self.router, username='tkonishi', password='0000')
         for scope in mitigationrequest['ietf-dots-signal-channel:mitigation-scope']['scope']:
             for target_prefix in scope['target-prefix']:
-                target_ip = re.sub('/\d*', '', target_prefix)
+                target_ip = re.sub(r'/\d*', '', target_prefix)
                 for target_port_range in scope['target-port-range']:
                     target_lower_port = target_port_range['lower-port']
                     for target_protocol in scope['target-protocol']:
@@ -27,13 +28,13 @@ class Mitigation():
                             print(line)
         client.close()
 
-    def throttle(self, mitigationrequest):
+    def shaping(self, mitigationrequest):
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         client.connect(self.router, username='tkonishi', password='0000')
         for scope in mitigationrequest['ietf-dots-signal-channel:mitigation-scope']['scope']:
             for target_prefix in scope['target-prefix']:
-                target_ip = re.sub('/\d*', '', target_prefix)
+                target_ip = re.sub(r'/\d*', '', target_prefix)
                 for target_port_range in scope['target-port-range']:
                     target_lower_port = target_port_range['lower-port']
                     for target_protocol in scope['target-protocol']:

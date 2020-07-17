@@ -1,5 +1,6 @@
-import sys
 import json
+import sys
+
 from coapthon.client.helperclient import HelperClient
 
 
