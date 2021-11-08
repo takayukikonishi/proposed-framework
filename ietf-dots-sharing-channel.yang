@@ -1,0 +1,77 @@
+module ietf-dots-sharing-channel {
+    yang-version 1.1;
+    namespace "urn:ietf:params:xml:ns:yang:ietf-dots-sharing-channel";
+    prefix dots-sharing;
+
+    import ietf-inet-types {
+        prefix inet;
+        reference "Section 4 of RFC 6991";
+    }
+
+    container ddos-backscatter-data {
+        list ddos-backscatter {
+            key "source-ip-address";
+            leaf source-ip-address {
+                type inet:ip-address;
+            }
+            list traffics {
+                key "cuid";
+                leaf cuid {
+                    type string;
+                }
+                leaf cdid {
+                    type string;
+                    mandatory false;
+                }
+                list traffic {
+                    key "bid";
+                    leaf bid {
+                        type uint64;
+                    }
+                    leaf-list destination-ip-address {
+                        type inet:ip-address;
+                    }
+                    list source-port-range {
+                        key "lower-port";
+                        leaf lower-port{
+                            type inet:port-number;
+                        }
+                        leaf upper-port {
+                            type inet:port-number;
+                            mandatory false;
+                        }
+                    }
+                    list destination-port-range {
+                        key "lower-port";
+                        leaf lower-port{
+                            type inet:port-number;
+                        }
+                        leaf upper-port {
+                            type inet:port-number;
+                            mandatory false;
+                        }
+                    }
+                    leaf-list protocol-number {
+                        type uint8;
+                    }
+                    leaf-list tcp-control-flag {
+                        type uint8;
+                    }
+                    leaf-list icmp-type {
+                        type uint8;
+                    }
+                    leaf-list icmp-code {
+                        type uint8;
+                    }
+                    leaf start-time {
+                        type int32;
+                        mandatory true;
+                    }
+                    leaf end-time {
+                        type int32;
+                    }
+                }
+            }
+        }
+    }
+}
